@@ -1,4 +1,4 @@
-import { MenuItemConstructorOptions, shell } from 'electron';
+import { BrowserWindow, MenuItemConstructorOptions, shell } from 'electron';
 import { SoliasFileManager } from './file-manager';
 
 // isMac = process.platform === 'darwin';
@@ -9,7 +9,7 @@ export const SOLIAS_MENU_ITEMS: MenuItemConstructorOptions[] = [
         submenu: [
             {
                 label: 'Open',
-                click: async (_, win) => {
+                click: async (_, win: BrowserWindow) => {
                     const fileService = new SoliasFileManager();
                     const fileData = await fileService.openFile();
                     win.webContents.send('openfile', fileData);
@@ -18,14 +18,14 @@ export const SOLIAS_MENU_ITEMS: MenuItemConstructorOptions[] = [
             },
             {
                 label: 'Save',
-                click: async (_, win) => {
+                click: async (_, win: BrowserWindow) => {
                     win.webContents.send('savefile-from-menu');
                 },
                 accelerator: 'CmdOrCtrl+S'
             },
             {
                 label: 'Export',
-                click: async (_, win) => {
+                click: async (_, win: BrowserWindow) => {
                     win.webContents.send('export-from-menu');
                 },
                 accelerator: 'CmdOrCtrl+E'
