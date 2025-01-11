@@ -6,7 +6,11 @@ export class SoliasFileManager {
 
     notification = new SoliasNotifications();
 
-    // Open File Dialog
+    /**
+     * Opens a file dialog and returns the selected file path.
+     * The file dialog is set to open HTML and JSON files.
+     * @returns The selected file path or an empty object if the user cancelled the dialog.
+     */
     async openFile(): Promise<OpenDialogReturnValue> {
         const result = await dialog.showOpenDialog({
             filters: [{
@@ -18,7 +22,13 @@ export class SoliasFileManager {
         return result;
     }
 
-    // Save file
+    /**
+     * Opens a save file dialog and returns the selected file path.
+     * The file dialog is set to save files of a specific type.
+     * @param content The content of the file to be saved.
+     * @param fileType The type of the file to be saved (e.g. 'html', 'json').
+     * @returns The selected file path or an empty object if the user cancelled the dialog.
+     */
     async saveFile(content: string, fileType: string): Promise<SaveDialogReturnValue> {
         const result = await dialog.showSaveDialog({
             filters: [{
@@ -35,7 +45,13 @@ export class SoliasFileManager {
         return result;
     }
 
-    // Update saved file
+    /**
+     * Writes the given content to the given file path.
+     * Shows a notification on success or failure.
+     * @param filePath The path of the file to write to.
+     * @param content The content to write to the file.
+     * @throws {Error} If the file could not be written.
+     */
     async writeFile(filePath: string, content: string): Promise<void> {
         try {
             await fs.writeFileSync(filePath, content);
