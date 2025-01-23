@@ -7,6 +7,25 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/Buddhilive/solias)
 
 
-# Solias Project
+# Solias - The Ultimate HTML Web Page Designer 🚀
 
-Stay tuned...
+**Design. Drag. Done.**  
+Solias is a powerful, intuitive, and user-friendly software for designing stunning HTML web pages effortlessly. Built on the robust [GrapesJS](https://grapesjs.com/) framework, Solias empowers developers, designers, and beginners alike to create responsive, professional websites with ease – no coding required!
+
+---
+
+## 📄 License
+
+Solias is open-source and licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+## 🙏 Acknowledgments
+
+- Built with ❤️ using [GrapesJS](https://grapesjs.com/).
+- Inspired by the need for simple, powerful web design tools.
+
+---
+
+**Design Smarter. Launch Faster. Stand Out.**  
+With Solias, the web is your canvas. Start creating today! 🎨
