@@ -4,6 +4,8 @@ import { SoliasCoreService } from "./shared/interfaces/window.interface";
 import { SoliasCLIOptions } from "./shared/interfaces/cli-options.interface";
 import { ERROR_TEMPLATE } from "./templates/error.template";
 import { CORE_TEMPLATE } from "./templates/core.template";
+import { GRAPES_JS_TEMPLATE } from "./templates/grapesjs.template";
+import { SoliasGrapesJS } from "./classes/grapesjs";
 
 /* Context Bridge */
 contextBridge.exposeInMainWorld('soliasCoreService', {
@@ -21,7 +23,8 @@ window.onload = () => {
     appRoot = document.querySelector('#app-root');
     setMessage('Initializing...');
     /* Check Versions */
-    checkVersions();
+    // checkVersions();
+    loadGrapesJS();
 };
 
 function checkVersions() {
@@ -81,4 +84,10 @@ function setMessage(msg: string) {
 function loadApp() {
     const soliasApp = new SoliasCore();
     soliasApp.init();
+}
+
+function loadGrapesJS() {
+    appRoot.innerHTML = GRAPES_JS_TEMPLATE;
+    const grapesjs = new SoliasGrapesJS();
+    grapesjs.init();
 }

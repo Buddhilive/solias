@@ -1,0 +1,4 @@
+.gjs-dashed div, span {
+    border: 1px dashed var(--gjs-font-color);
+    padding: 1rem;
+}

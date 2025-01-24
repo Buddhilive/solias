@@ -1,0 +1,141 @@
+:root {
+  --gjs-primary-color: #10172a;
+  --gjs-secondary-color: #cbd5e1;
+  --gjs-tertiary-color: #1e293b;
+  --gjs-quaternary-color: #2563ec;
+}
+@font-face {
+  font-family: Material Icons;
+  font-style: normal;
+  font-weight: 400;
+  src: url(../../assets/icons/material-icons.woff2) format("woff2");
+}
+.material-icons {
+  font-family: Material Icons;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+.solias-designer {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100vh;
+}
+.solias-designer,
+.solias-designer__workspace {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.solias-designer__workspace {
+  flex-direction: row;
+  flex-grow: 1;
+}
+.solias-designer__panel-top {
+  padding: 0;
+  width: 100%;
+  display: flex;
+  position: static;
+  justify-content: space-between;
+}
+.solias-designer__actions {
+  position: static;
+}
+.solias-designer__panel-right {
+  flex-basis: 230px;
+  position: relative;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 42px);
+}
+.solias-designer__panel-right::-webkit-scrollbar {
+  width: 6px;
+}
+.solias-designer__panel-right::-webkit-scrollbar-track {
+  background: var(--gjs-tertiary-color);
+}
+.solias-designer__panel-right::-webkit-scrollbar-thumb {
+  background: var(--gjs-quaternary-color);
+}
+.solias-designer__canvas {
+  flex-grow: 1;
+}
+.solias-designer__canvas .gjs-cv-canvas {
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.solias-designer__blocks .gjs-blocks-c {
+  gap: 8px;
+  padding: 8px;
+}
+.solias-designer__blocks .gjs-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 47%;
+  height: 80px;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid var(--gjs-font-color);
+  border-radius: 8px;
+  transition: border 0.5 ease;
+}
+.solias-designer__blocks .gjs-block:hover {
+  border: 1px solid var(--gjs-quaternary-color);
+}
+.solias-designer__blocks .gjs-block-label {
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+}
+.solias-designer__devices,
+.solias-designer__switcher {
+  position: static;
+}
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5fBBc4.woff2)
+    format("woff2");
+  unicode-range: u+0100-02af, u+0304, u+0308, u+0329, u+1e00-1e9f, u+1ef2-1eff,
+    u+2020, u+20a0-20ab, u+20ad-20c0, u+2113, u+2c60-2c7f, u+a720-a7ff;
+}
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7GxKOzY.woff2)
+    format("woff2");
+  unicode-range: u+0100-02af, u+0304, u+0308, u+0329, u+1e00-1e9f, u+1ef2-1eff,
+    u+2020, u+20a0-20ab, u+20ad-20c0, u+2113, u+2c60-2c7f, u+a720-a7ff;
+}
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9fChc4EsA.woff2)
+    format("woff2");
+  unicode-range: u+0100-02af, u+0304, u+0308, u+0329, u+1e00-1e9f, u+1ef2-1eff,
+    u+2020, u+20a0-20ab, u+20ad-20c0, u+2113, u+2c60-2c7f, u+a720-a7ff;
+}
+body,
+html {
+  /* font-family: Roboto, sans-serif; */
+  margin: 0;
+  padding: 0;
+}
