@@ -10,7 +10,8 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
-    icon: 'src/icon.png'
+    icon: 'src/icon.png',
+    executableName: 'solias'
   },
   rebuildConfig: {},
   makers: [
@@ -62,7 +63,7 @@ const config: ForgeConfig = {
       name: '@electron-forge/publisher-github',
       config: {
         repository: {
-          owner: 'BerkeliumLabs',
+          owner: 'Buddhilive',
           name: 'solias'
         },
         prerelease: true
