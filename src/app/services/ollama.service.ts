@@ -12,9 +12,9 @@ export class OllamaService {
 
   generate() {
     const body = {
-      model: 'qwen2.5-coder:7b',
+      model: 'smollm:135m',
       prompt: 'hello',
     };
-    return this.httpClient.post('http://localhost:11434', body);
+    return this.httpClient.post('http://localhost:11434/api/generate', body, { responseType: 'text' });
   }
 }

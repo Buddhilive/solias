@@ -14,6 +14,6 @@ export class AppComponent implements OnInit {
   private _ollamaService = inject(OllamaService);
 
   ngOnInit(): void {
-    this._ollamaService.welcome().subscribe((res) => console.log(res));
+    this._ollamaService.generate().subscribe((res) => console.log(res));
   }
 }
