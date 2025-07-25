@@ -10,3 +10,26 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String    // We'll hash this in Chapter 2
+  name      String?   // Optional name
+  role      String    @default("AUTHOR") // "AUTHOR", "PUBLISHER", "ADMIN"
+  articles  Article[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Article {
+  id          String    @id @default(cuid())
+  title       String
+  content     String
+  status      String    @default("DRAFT") // "DRAFT", "PUBLISHED", "PENDING_REVIEW"
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    String
+  publishedAt DateTime? // When the article was published
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
