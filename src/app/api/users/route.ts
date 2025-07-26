@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import bcrypt from 'bcryptjs';
 
 // Handle GET requests to /api/users
 export async function GET(request: Request) {
@@ -36,12 +37,14 @@ export async function POST(request: Request) {
       );
     }
 
-    // For now, we're not hashing the password. We'll add that in Chapter 2.
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+
     const newUser = await prisma.user.create({
       data: {
         email,
         name,
-        password, // Store as plain text for now, will hash later
+        password: hashedPassword, // Store the hashed password
         role: role || "AUTHOR", // Default role to AUTHOR if not provided
       },
     });
