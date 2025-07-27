@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Solias Knowledge Management System (KMS)
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+2. **Set up environment variables:**
+   - Create a `.env` file in the root directory.
+   - Copy the following sample and replace values with your own:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```env
+   DATABASE_URL="file:./data/dev.db"
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   NEXT_PUBLIC_API_KEY="your_api_key_here"
+   NEXT_PUBLIC_AUTH_DOMAIN="your_auth_domain_here"
+   NEXT_PUBLIC_PROJECT_ID="your_project_id_here"
+   NEXT_PUBLIC_STORAGE_BUCKET="your_storage_bucket_here"
+   NEXT_PUBLIC_MESSAGING_SENDER_ID="your_messaging_sender_id_here"
+   NEXT_PUBLIC_APP_ID="your_app_id_here"
+   NEXT_PUBLIC_MEASUREMENT_ID="your_measurement_id_here"
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+   The app will be available at [http://localhost:3000](http://localhost:3000).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Notes
+- Do **not** commit your real environment variables to version control.
+- For database setup, Prisma is used with SQLite by default (see `prisma/schema.prisma`).
+- For more details, refer to the documentation in the `docs/` folder or project source files.
