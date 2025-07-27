@@ -29,7 +29,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { useRouter } from "next/navigation"
+import { signOut } from "firebase/auth"
+import { auth } from "@/app/firebase/config"
 
 export function NavUser({
   user,
@@ -41,12 +42,6 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar();
-  const router = useRouter();
-
-  const handleLogout = () => {
-    router.push("/login"); // Redirect to login page after logout
-    console.log("User logged out");
-  };
 
   return (
     <SidebarMenu>
@@ -109,7 +104,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={() => signOut(auth)}>
               <LogOut />
               Log out
             </DropdownMenuItem>

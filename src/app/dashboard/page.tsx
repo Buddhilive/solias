@@ -1,4 +1,6 @@
-import { AppSidebar } from "@/components/app-sidebar"
+"use client"
+import React from "react";
+import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,15 +8,32 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+
+  const [user] = useAuthState(auth);
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
+
+  if (!user) {
+    return null; // Prevent rendering the page while redirecting
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -51,5 +70,5 @@ export default function Page() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }
