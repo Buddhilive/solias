@@ -30,7 +30,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { signOut } from "firebase/auth"
-import { auth } from "@/app/firebase/config"
 
 export function NavUser({
   user,
@@ -104,7 +103,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => signOut(auth)}>
+            <DropdownMenuItem>
               <LogOut />
               Log out
             </DropdownMenuItem>

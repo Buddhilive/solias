@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useState } from "react";
-import { auth } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
 
 export function LoginForm({
@@ -14,20 +13,10 @@ export function LoginForm({
 }: React.ComponentProps<"form">) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await signInWithEmailAndPassword(email, password);
-      console.log("User logged in:", res);
-      setEmail("");
-      setPassword("");
-      router.push("/dashboard"); // Redirect to dashboard or home page after login
-    } catch (error) {
-      console.error("Error logging in:", error);
-    }
   };
 
   return (

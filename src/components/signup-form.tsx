@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase/config";
 import { useState } from "react";
 
 export function SignupForm({
@@ -21,20 +20,6 @@ export function SignupForm({
 }: React.ComponentProps<"div">) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [createUserWithEmailAndPassword] =
-    useCreateUserWithEmailAndPassword(auth);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const res = await createUserWithEmailAndPassword(email, password);
-      console.log("User signed up:", res);
-      setEmail("");
-      setPassword("");
-    } catch (error) {
-      console.error("Error signing up:", error);
-    }
-  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -46,7 +31,7 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
