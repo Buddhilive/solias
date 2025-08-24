@@ -1,14 +1,32 @@
-'use server';
+"use server";
 
+import { signIn } from "@/auth";
+import { defaultUrl } from "@/routes";
 import { LoginSchema } from "@/schema";
+import { AuthError } from "next-auth";
 import z from "zod";
 
 export const LoginAction = async (data: z.infer<typeof LoginSchema>) => {
   const validatedData = LoginSchema.safeParse(data);
 
   if (!validatedData.success) {
-    return { error: validatedData.error, message: "Invalid login data" };
+    return { error: validatedData.error };
   }
 
-  return { success: true, message: "Login successful" };
+  const { email, password } = validatedData.data;
+
+  try {
+    await signIn("credentials", { email, password, redirectTo: defaultUrl });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return { error: "Invalid email or password" };
+        default:
+          return { error: "Unknown error" };
+      }
+    }
+  }
+
+  return { success: "Login successful" };
 };
