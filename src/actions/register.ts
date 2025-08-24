@@ -4,6 +4,7 @@ import { RegisterSchema } from "@/schema";
 import z from "zod";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { getUserByEmail } from "@/data/user";
 
 export const RegisterAction = async (data: z.infer<typeof RegisterSchema>) => {
   const validatedData = RegisterSchema.safeParse(data);
@@ -14,7 +15,7 @@ export const RegisterAction = async (data: z.infer<typeof RegisterSchema>) => {
 
   const { email, name, password } = validatedData.data;
 
-  const userExists = await prisma.user.findUnique({ where: { email } });
+  const userExists = await getUserByEmail(email);
 
   if (userExists) {
     return { error: "User already exists", message: "Registration failed" };
