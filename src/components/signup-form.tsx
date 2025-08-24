@@ -11,15 +11,41 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterSchema } from "@/schema";
+import z from "zod";
+import { SoliasAlert } from "./custom/solias-alert";
+import { RegisterAction } from "@/actions/register";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
+  });
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  const onSubmit = async (data: z.infer<typeof RegisterSchema>) => {
+    startTransition(() => {
+      RegisterAction(data).then((result) => {
+        if (result.error) {
+          setError(result.message);
+        } else {
+          router.push("/login");
+        }
+      });
+    });
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -31,34 +57,75 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
+              <div className="grid gap-3">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  {...register("name")}
+                  required
+                  disabled={isPending}
+                />
+                {errors.name && (
+                  <SoliasAlert title="Invalid name" variant="destructive">
+                    {errors.name.message}
+                  </SoliasAlert>
+                )}
+              </div>
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  {...register("email")}
                   required
+                  disabled={isPending}
                 />
+                {errors.email && (
+                  <SoliasAlert title="Invalid email" variant="destructive">
+                    {errors.email.message}
+                  </SoliasAlert>
+                )}
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...register("password")}
                   required
+                  disabled={isPending}
                 />
+                {errors.password && (
+                  <SoliasAlert title="Invalid password" variant="destructive">
+                    {errors.password.message}
+                  </SoliasAlert>
+                )}
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  {...register("confirmPassword")}
+                  required
+                  disabled={isPending}
+                />
+                {errors.confirmPassword && (
+                  <SoliasAlert title="Invalid confirm password" variant="destructive">
+                    {errors.confirmPassword.message}
+                  </SoliasAlert>
+                )}
               </div>
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" disabled={isPending}>
                   Signup
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" disabled={isPending}>
                   Signup with Google
                 </Button>
               </div>
