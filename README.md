@@ -12,14 +12,6 @@
 
    ```env
    DATABASE_URL="file:./data/dev.db"
-
-   NEXT_PUBLIC_API_KEY="your_api_key_here"
-   NEXT_PUBLIC_AUTH_DOMAIN="your_auth_domain_here"
-   NEXT_PUBLIC_PROJECT_ID="your_project_id_here"
-   NEXT_PUBLIC_STORAGE_BUCKET="your_storage_bucket_here"
-   NEXT_PUBLIC_MESSAGING_SENDER_ID="your_messaging_sender_id_here"
-   NEXT_PUBLIC_APP_ID="your_app_id_here"
-   NEXT_PUBLIC_MEASUREMENT_ID="your_measurement_id_here"
    ```
 
 3. **Run the development server:**
