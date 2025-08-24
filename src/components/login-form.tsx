@@ -28,10 +28,11 @@ export function LoginForm({
   const router = useRouter();
 
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
+    setError(null);
     startTransition(() => {
       LoginAction(data).then((result) => {
         if (result.error) {
-          setError(result.message);
+          setError(result.error as string);
         } else {
           router.push("/dashboard");
         }
@@ -94,6 +95,11 @@ export function LoginForm({
         <Button type="submit" className="w-full" disabled={isPending}>
           Login
         </Button>
+        {error && (
+          <SoliasAlert title="Login error" variant="destructive">
+            {error}
+          </SoliasAlert>
+        )}
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
           <span className="bg-background text-muted-foreground relative z-10 px-2">
             Or continue with

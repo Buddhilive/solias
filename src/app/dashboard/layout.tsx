@@ -1,5 +1,6 @@
-'use client';
+// Removed 'use client' to make this a Server Component
 import React from "react";
+import { auth } from "@/auth";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
@@ -15,18 +16,22 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { useRouter } from "next/navigation";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter();
+  const session = await auth();
+  const user = {
+    name: session?.user?.name || "shadcn",
+    email: session?.user?.email || "m@example.com",
+    avatar: session?.user?.image || "/images/default_avatar.png",
+  };
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar user={user} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">

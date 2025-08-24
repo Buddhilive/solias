@@ -16,8 +16,9 @@ export const LoginAction = async (data: z.infer<typeof LoginSchema>) => {
   const { email, password } = validatedData.data;
 
   try {
-    await signIn("credentials", { email, password, redirectTo: defaultUrl });
+    await signIn("credentials", { email, password, redirect: false });
   } catch (error) {
+    console.error('Login error:', error);
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
@@ -25,6 +26,8 @@ export const LoginAction = async (data: z.infer<typeof LoginSchema>) => {
         default:
           return { error: "Unknown error" };
       }
+    } else {
+      return { error: "Unknown error" };
     }
   }
 
