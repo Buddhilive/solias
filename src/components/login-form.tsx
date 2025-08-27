@@ -12,7 +12,6 @@ import { SoliasAlert } from "./custom/solias-alert";
 import { LoginAction } from "@/actions/login";
 import { useState, useTransition } from "react";
 import { signIn } from "next-auth/react";
-import { defaultUrl } from "@/routes";
 
 export function LoginForm({
   className,

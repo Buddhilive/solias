@@ -34,6 +34,7 @@ export function SignupForm({
   });
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const router = useRouter();
 
   const onSubmit = async (data: z.infer<typeof RegisterSchema>) => {
@@ -42,7 +43,7 @@ export function SignupForm({
         if (result.error) {
           setError(result.message);
         } else {
-          router.push("/login");
+          setSuccess("Verification email sent");
         }
       });
     });
@@ -136,6 +137,11 @@ export function SignupForm({
                 {error && (
                   <SoliasAlert title="Login error" variant="destructive">
                     {error}
+                  </SoliasAlert>
+                )}
+                {success && (
+                  <SoliasAlert title="Success" variant="default">
+                    {success}
                   </SoliasAlert>
                 )}
                 <Button type="submit" className="w-full" disabled={isPending}>
