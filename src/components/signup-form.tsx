@@ -19,6 +19,7 @@ import { SoliasAlert } from "./custom/solias-alert";
 import { RegisterAction } from "@/actions/register";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export function SignupForm({
   className,
@@ -47,6 +48,10 @@ export function SignupForm({
     });
   };
 
+  const socialLogin = (provider: "google") => {
+    signIn(provider);
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -57,8 +62,11 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6">
+            <form
+              className="flex flex-col gap-6"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <div className="grid gap-3">
                 <Label htmlFor="name">Name</Label>
                 <Input
@@ -116,27 +124,42 @@ export function SignupForm({
                   disabled={isPending}
                 />
                 {errors.confirmPassword && (
-                  <SoliasAlert title="Invalid confirm password" variant="destructive">
+                  <SoliasAlert
+                    title="Invalid confirm password"
+                    variant="destructive"
+                  >
                     {errors.confirmPassword.message}
                   </SoliasAlert>
                 )}
               </div>
               <div className="flex flex-col gap-3">
+                {error && (
+                  <SoliasAlert title="Login error" variant="destructive">
+                    {error}
+                  </SoliasAlert>
+                )}
                 <Button type="submit" className="w-full" disabled={isPending}>
                   Signup
                 </Button>
-                <Button variant="outline" className="w-full" disabled={isPending}>
-                  Signup with Google
-                </Button>
               </div>
+            </form>
+            <div className="flex flex-col gap-3">
+              <Button
+                variant="outline"
+                className="w-full"
+                disabled={isPending}
+                onClick={() => socialLogin("google")}
+              >
+                Signup with Google
+              </Button>
             </div>
-            <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
-              <a href="/login" className="underline underline-offset-4">
-                Login
-              </a>
-            </div>
-          </form>
+          </div>
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <a href="/login" className="underline underline-offset-4">
+              Login
+            </a>
+          </div>
         </CardContent>
       </Card>
     </div>
