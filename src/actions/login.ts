@@ -1,6 +1,8 @@
 "use server";
 
 import { signIn } from "@/auth";
+import { getUserByEmail } from "@/data/user";
+import { generateVerificationToken } from "@/lib/tokens";
 import { defaultUrl } from "@/routes";
 import { LoginSchema } from "@/schema";
 import { AuthError } from "next-auth";
@@ -15,6 +17,17 @@ export const LoginAction = async (data: z.infer<typeof LoginSchema>) => {
 
   const { email, password } = validatedData.data;
 
+  const existingUser = await getUserByEmail(email);
+
+  if (!existingUser || !existingUser.email || !existingUser.password) {
+    return { error: "User not found" };
+  }
+
+  if (!existingUser.emailVerified) {
+    await generateVerificationToken(email);
+    return { error: "Email not verified. Verification email sent." };
+  }
+
   try {
     await signIn("credentials", { email, password, redirect: false });
   } catch (error) {
@@ -23,11 +36,15 @@ export const LoginAction = async (data: z.infer<typeof LoginSchema>) => {
       switch (error.type) {
         case "CredentialsSignin":
           return { error: "Invalid email or password" };
+        case "OAuthAccountNotLinked":
+          return { error: "OAuth account not linked" };
+        case "AccessDenied":
+          return { error: "Email not verified" };
         default:
           return { error: "Unknown error" };
       }
     } else {
-      return { error: "Unknown error" };
+      return { error: "Login failed" };
     }
   }
 

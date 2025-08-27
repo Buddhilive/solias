@@ -3,7 +3,6 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import authConfig from "./auth.config";
 import { getUserById } from "./data/user";
-import { JWT } from "@auth/core/jwt";
 
 declare module "next-auth" {
   interface Session {
@@ -36,11 +35,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   callbacks: {
-    async signIn({ user }) {
+    async signIn({ user, account }) {
       if (!user || !user.id) return false;
-      const hasUser = await getUserById(user.id);
 
-      // if (!hasUser || !hasUser.emailVerified) return false;
+      if (account?.provider !== "credentials") return true;
+      
+      const hasUser = await getUserById(user.id);
+      if (!hasUser || !hasUser.emailVerified) return false;
 
       return true;
     },
